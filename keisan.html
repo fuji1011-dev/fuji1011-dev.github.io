@@ -1,0 +1,48 @@
+<style>
+.diet_form {
+    background: #eaf4ff;
+    padding: 10px 30px;
+}
+form dl dt {
+    width: 200px;
+    height: 40px;
+    padding: 10px 0;
+    line-height: 40px;
+    float: left;
+}
+form dl dd {
+    padding: 10px 0;
+    margin: 0;
+}
+.box {
+    box-sizing: border-box;
+    width: 150px !important;
+    height: 40px !important;
+    margin: 0 !important;
+    padding: 0 10px !important;
+}
+.calc-btn {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #333;
+}
+.calc-btn:hover {
+    cursor: pointer;
+}
+</style>
+<form class="diet_form">
+    <dl>
+        <dt>元の額：</dt>
+        <dd><input type="number" class="box" name="base"></dd>
+        <dt>変動後：</dt>
+        <dd><input type="number" class="box" name="num"></dd>
+        <p><input type="button" class="calc-btn" onclick="calc(base.value, num.value);" value="計算"></p>
+        <dt>変動値(%)：</dt>
+        <dd><input id="lean" class="box" type="text" readonly=""></dd>
+    </dl>
+</form>
+<script>
+    function calc(base, num) {
+        const lean_value = document.getElementById('lean').value = (num / base) * 100;
+    }
+</script>
