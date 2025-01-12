@@ -3,6 +3,11 @@
     background: #eaf4ff;
     padding: 10px 30px;
 }
+.diet_form2 {
+    background: #eafff4;
+    padding: 10px 30px;
+}
+
 form dl dt {
     width: 200px;
     height: 40px;
@@ -29,7 +34,18 @@ form dl dd {
 .calc-btn:hover {
     cursor: pointer;
 }
+
+.calc-btn2 {
+    width: 80px;
+    height: 30px;
+    border: 1px solid #333;
+}
+.calc-btn2:hover {
+    cursor: pointer;
+}
+
 </style>
+
 <form class="diet_form">
     <dl>
         <dt>元の額：</dt>
@@ -42,10 +58,36 @@ form dl dd {
     </dl>
 </form>
 
+<form class="diet_form2">
+    <dl>
+        <dt>購入時の暗号資産の額</dt>
+        <dd><input type="number" class="box" name="buyBTC"></dd>
+        <dt>何円分</dt>
+        <dd><input type="number" class="box" name="yen"></dd>
+	<dt>売却時の暗号資産の額</dt>
+        <dd><input type="number" class="box" name="sellBTC"></dd>
+
+        <p><input type="button" class="calc-btn2" onclick="keisan2(buyBTC.value, yen.value, 		sellBTC.value);" value="計算"></p>
+        <dt>売却額</dt>
+        <dd><input id="lean1" class="box" type="text" readonly=""></dd>
+        <dt>変動値(%)</dt>
+        <dd><input id="lean2" class="box" type="text" readonly=""></dd>
+	<dt>変動額</dt>
+        <dd><input id="lean3" class="box" type="text" readonly=""></dd>
+    </dl>
+</form>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
 
 <script>
     function calc(base, num) {
         const lean_value = document.getElementById('lean').value = (num / base) * 100;
+    }
+
+    function keisan2(buyBTC,yen,sellBTC) {
+        const lean_value1 = document.getElementById('lean1').value = sellBTC * yen;
+        const lean_value2 = document.getElementById('lean2').value = (sellBTC / buyBTC * yen) / yen * 100;
+	const lean_value3 = document.getElementById('lean3').value = sellBTC / buyBTC * yen - yen;
+
     }
 </script>
