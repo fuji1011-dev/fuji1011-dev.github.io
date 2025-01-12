@@ -85,9 +85,9 @@ form dl dd {
     }
 
     function keisan2(buyBTC,yen,sellBTC) {
-        const lean_value1 = document.getElementById('lean1').value = sellBTC * yen;
-        const lean_value2 = document.getElementById('lean2').value = (sellBTC / buyBTC * yen) / yen * 100;
-	const lean_value3 = document.getElementById('lean3').value = sellBTC / buyBTC * yen - yen;
+        const lean_value1 = document.getElementById('lean1').value = (sellBTC / buyBTC) * yen;
+        const lean_value2 = document.getElementById('lean2').value = sellBTC / buyBTC * 100;
+	const lean_value3 = document.getElementById('lean3').value = lean_value1 - yen;
 
     }
 </script>
