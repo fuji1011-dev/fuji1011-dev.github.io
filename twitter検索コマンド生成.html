@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Twitter検索コマンド作成</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 40px;
+      line-height: 1.6;
+    }
+
+    h2 {
+      color: #ffffff;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #cccccc;
+    }
+
+    input, textarea, button {
+      font-size: 1em;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 500px;
+      box-sizing: border-box;
+    }
+
+    input, textarea {
+      background-color: #2e2e2e;
+      color: #ffffff;
+    }
+
+    input:focus, textarea:focus {
+      outline: 2px solid #00bcd4;
+    }
+
+    button {
+      background-color: #00bcd4;
+      color: #1e1e1e;
+      font-weight: bold;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0097a7;
+    }
+
+    #result {
+      margin-top: 30px;
+      background-color: #2a2a2a;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    a {
+      color: #4fc3f7;
+      word-break: break-all;
+    }
+
+    textarea {
+      resize: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Twitter 検索コマンド生成</h2>
+
+  <label for="user">ユーザーID（@なし）:</label>
+  <input type="text" id="user" placeholder="例: username">
+
+  <label for="start">開始日（YYYY-MM-DD）:</label>
+  <input type="date" id="start">
+
+  <label for="end">終了日（YYYY-MM-DD）:</label>
+  <input type="date" id="end">
+
+  <label for="word">検索ワード:</label>
+  <input type="text" id="word" placeholder="例: xxxxx"><br>
+
+
+  <button onclick="generateCommand()">create</button>
+
+  <div id="result"></div>
+
+  <script>
+    function generateCommand() {
+      const user = document.getElementById("user").value.trim();
+      const start = document.getElementById("start").value;
+      const end = document.getElementById("end").value;
+      const word = document.getElementById("word").value.trim();
+
+      const parts = [];
+
+      if (word) parts.push(word);
+      if (user) parts.push(`from:${user}`);
+      if (start) parts.push(`since:${start}`);
+      if (end) parts.push(`until:${end}`);
+
+      if (parts.length === 0) {
+        document.getElementById("result").innerHTML = `<p style="color:#ff6f6f;">1つ以上の項目を入力してください。</p>`;
+        return;
+      }
+
+      const query = parts.join(" ");
+      const encoded = encodeURIComponent(query);
+      const url = `https://twitter.com/search?q=${encoded}&src=typed_query`;
+
+      document.getElementById("result").innerHTML = `
+        🔍 <strong>検索コマンド（コピーして使えます）:</strong><br>
+        <textarea readonly onclick="this.select()">${query}</textarea><br><br>
+        🔗 <strong>検索URL:</strong><br>
+        <a href="${url}" target="_blank">${url}</a>
+      `;
+    }
+  </script>
+
+</body>
+</html>
